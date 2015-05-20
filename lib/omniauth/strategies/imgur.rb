@@ -14,41 +14,20 @@ module OmniAuth
         super
       end
 
-      uid { raw_info['account_id'] }
+      uid { raw_info['id'] }
 
       info do
         {
-          'name'     => raw_info['account_username'],
-          'email'    => raw_info['email'],
-          'image'    => raw_info['profile_picture'],
-          'bio'      => raw_info['bio'],
-          'website'  => raw_info['website'],
+          'name'           => raw_info['url'],
+          'bio'            => raw_info['bio'],
+          'reputation'     => raw_info['reputation'],
+          'created'        => raw_info['created'],
+          'pro_expiration' => raw_info['pro_expiration']
         }
       end
 
       def raw_info
-        @data ||= access_token.params["user"]
-        unless @data
-          access_token.options[:mode] = :query
-          access_token.options[:param_name] = "access_token"
-          @data ||= access_token.get('/v1/users/self').parsed['data'] || {}
-        end
-        @data
-      end
-
-      # You can pass +scope+ params to the auth request, if you need to set them dynamically.
-      # You can also set these options in the OmniAuth config :authorize_params option.
-      #
-      # For example: /auth/imgur?scope=likes+photos
-      def authorize_params
-        super.tap do |params|
-          %w[scope].each do |v| 
-            params[v.to_sym] = request.params[v] if request.params[v]
-            if params[v.to_sym]
-              params[v.to_sym] = Array(params[v.to_sym]).join(' ')
-            end
-          end
-        end
+        @data ||= access_token.get('/3/account/me').parsed
       end
       
     end
