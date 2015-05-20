@@ -11,7 +11,7 @@ module OmniAuth
 
       def request_phase
         options[:response_type] ||= 'code'
-        redirect client.auth_code.authorize_url(options.authorize_params)
+        redirect client.auth_code.authorize_url(authorize_params)
       end
 
       uid { raw_info['id'] }
