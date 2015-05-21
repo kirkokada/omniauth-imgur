@@ -14,7 +14,7 @@ module OmniAuth
         redirect client.auth_code.authorize_url(authorize_params)
       end
 
-      uid { raw_info['id'] }
+      uid { access_token.params['account_id'] }
 
       info do
         {
@@ -27,7 +27,7 @@ module OmniAuth
       end
 
       def raw_info
-        @data ||= access_token.get('/3/account/me').parsed
+        @raw_info ||= access_token.get('/3/account/me').parsed
       end
       
     end
