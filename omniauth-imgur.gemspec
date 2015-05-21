@@ -7,6 +7,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{OmniAuth strategy for Imgur.}
   gem.summary       = %q{OmniAuth strategy for Imgur.}
   gem.homepage      = "https://github.com/kirkokada/omniauth-instagram"
+  gem.license       = "MIT"
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   gem.files         = `git ls-files`.split("\n")
